@@ -1,12 +1,13 @@
 import { useState } from 'react'
+import ListaPersonajes from './components/ListaPersonajes'
 
-import '@/css/App.css'
+
 
 function App() {
 
   return (
     <>
-
+      <ListaPersonajes />
     </>
   )
 }
