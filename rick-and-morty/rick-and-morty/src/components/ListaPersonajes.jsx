@@ -45,14 +45,13 @@ const ListaPersonajes = () => {
                 {
                     characters.map((character, i) => (
                         <li key={i}>
-                            <img src="h" alt="h" />
+                            <img loading='lazy' src={character.image} alt={`Imagen de ${character.name}`} />
                             {character.name}
                         </li>
                     ))
                 }
             </ul>
             <button onClick={handleMorePages}>Siguiente página</button>
-
         </div>
     );
 }
