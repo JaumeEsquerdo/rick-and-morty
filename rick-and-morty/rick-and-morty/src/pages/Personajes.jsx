@@ -1,8 +1,15 @@
 import { useState, useEffect } from "react";
+import { ListaPersonajes } from '@/components/ListaPersonajes'
 
 export const Personajes = () => {
-    return ( <div>
+    return (<div>
+        <audio autoPlay loop>
+            <source src="./music/Ivan Cornejo - Mirada (Official Lyric Video).mp3" type="audio/mp3" />
+        </audio>
 
-    </div> );
+        <h2>Personajes</h2>
+        <ListaPersonajes />
+
+    </div>);
 }
- 
+

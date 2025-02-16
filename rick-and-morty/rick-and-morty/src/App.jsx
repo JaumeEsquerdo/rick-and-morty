@@ -43,7 +43,6 @@ function App() {
   return (
     <>
       <NavBar />
-      <ListaPersonajes />
 
       <Component />
     </>

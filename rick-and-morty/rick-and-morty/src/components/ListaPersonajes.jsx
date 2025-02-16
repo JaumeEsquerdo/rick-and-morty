@@ -1,57 +1,78 @@
 import { useState, useEffect } from 'react';
 
-const ListaPersonajes = () => {
+export const ListaPersonajes = () => {
 
     const [characters, setCharacters] = useState([]);
-    const [count, setCount] = useState(20); //estado para el manejo de personajes a mostrar
+    // const [count, setCount] = useState(20); //estado para el manejo de personajes a mostrar
     const [page, setPage] = useState(1); //carga desde la primera página, cada página contiene 20 personajes y hay 183personajes
-
+    const [hasNextPage, setHasNextPage] = useState(true);
+    const [hasPrevPage, setHasPrevPage] = useState(false); //empieza en false ya que en la pagina 1 no hay menos
+    const [loading, setLoading] = useState(false);
     useEffect(() => {
 
-        const getCharacters = async (count) => { //count como parametro
-
+        const getCharacters = async () => {
+            setLoading(true)
             try {
                 console.log("Fetch")
                 const response = await fetch(`https://rickandmortyapi.com/api/character?page=${page}`);
+
+                //saber si la respuesta no tuvo exito
+                if (!response.ok) {
+                    throw new Error("Error de respuesta de servidor")
+                }
+
                 const data = await response.json();
 
                 if (data.results) {
-                    const selectedCharacters = data.results.slice(0, count)
-                    console.log("Personajes cargados", selectedCharacters)
+                    setCharacters(data.results);
 
-                    setCharacters(selectedCharacters);
+                    console.log("Personajes cargados", data.results)
+
                 }
+
+                setHasNextPage(data.info.next !== null); //verifica y pone true si no es null el valor
+                setHasPrevPage(data.info.prev !== null);
+
             } catch (error) {
                 console.error('Error:', error)
+            } finally {
+                setLoading(false);
             }
         };
-        getCharacters(count) //usa el estado actual
+        getCharacters() //usa la pagina actual
 
-    }, [count, page]); // cuando cambia count se actualiza
+    }, [page]); // cuando cambia count se actualiza
 
-    const handleMorePages = () =>{
-        setPage(page + 1); //cargar la siguiente page
-    }
+    const handleNextPage = () => {
+        if (hasNextPage) {//si es true hasnextpage
+            setPage(page + 1); //cargar la siguiente page
+        }
+    };
+
+    const handlePrevPage = () => {
+        if (hasPrevPage) {//si es true hasnextpage
+            setPage(page - 1); //cargar la siguiente page
+        }
+    };
+
 
     return (
         <div>
-            <audio autoPlay loop>
-                <source src="./music/Ivan Cornejo - Mirada (Official Lyric Video).mp3" type="audio/mp3" />
-            </audio>
 
-            <h2>Personajes</h2>
-
-            <ul>
+            {loading && <p>Cargando...</p>}
+            <ul className='Personajes-ul'>
                 {
                     characters.map((character, i) => (
                         <li key={i}>
                             <img loading='lazy' src={character.image} alt={`Imagen de ${character.name}`} />
-                            {character.name}
+                            <p>{character.name}</p>
                         </li>
                     ))
                 }
             </ul>
-            <button onClick={handleMorePages}>Siguiente página</button>
+            {/* si hasPrevPage o Next es false se deshabilita */}
+            <button disabled={!hasPrevPage} onClick={handlePrevPage}>Anteriores personajes</button>
+            <button disabled={!hasNextPage} onClick={handleNextPage}>Siguientes personajes</button>
         </div>
     );
 }
