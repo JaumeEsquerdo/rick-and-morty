@@ -9,13 +9,19 @@ import {Episodios} from '@/pages/Episodios'
 
 
 const NavBar = () => (
-  <nav>
-    <ul>
-      <li><a href="/personajes"></a></li>
-      <li><a href="/lugares"></a></li>
-      <li><a href="/episodios"></a></li>
+  <>
+  <div>
+    <img src="/img/rick-logo.png" alt="" />
+  </div>
+  <nav className='Navegacion'>
+    <ul className='Navegacion-ul'>
+      <li><a className='Navegacion-a' href="/personajes">Personajes</a></li>
+      <li><a className='Navegacion-a' href="/lugares">Lugares</a></li>
+      <li><a className='Navegacion-a' href="/episodios">Episodios</a></li>
     </ul>
   </nav>
+  
+  </>
 );
 
 

@@ -1,4 +1,27 @@
-.Personajes-ul{
+.Personajes-ul {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+}
+.Personajes-img{
+    border-radius: 20px;
+}
+.Fixed-image {
+    position: fixed;
+    top: 60px;
+    left: 0px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: -1;
+    width: 400px;   /* Ajusta el tamaño de la imagen según su contenido */
+    height: 400px;  /* Ajusta la altura proporcionalmente */
+    max-width: 100%; /* Para que no se salga de los límites de su contenedor */
+    object-fit: contain;
+    border: none;
+    border-style: none; /* Asegura que no haya borde */
+
+    outline: none;
+    padding: 0;
+    margin: 0;
+
 }

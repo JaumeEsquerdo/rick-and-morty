@@ -2,6 +2,11 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
+  --color-texto-principal: #f7e7d0;
+  --color-texto-secundario: #f7e7d0;
+  --color-bg-principal: #f7e7d0;
+  --color-bg-secundario: #f7e7d0;
+
 
 
 }
@@ -9,5 +14,30 @@
   /* margin: 0; */
   padding: 0;
   box-sizing: border-box;
+  color: var(--color-texto-principal);
 }
+.Body{
+  background-image: url('/img/fondo-estrellas.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: repeat-y;
+  min-height: 100vh;
+  aspect-ratio: 16/9;
+  margin: 0;
+  z-index: -1;
+}
+ul{
+  list-style: none;
+}
+.Navegacion-ul{
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+.Navegacion-a{
+  margin: 0 20px;
+  text-decoration: none;
+  font-size: 24px;
+}
+
 
