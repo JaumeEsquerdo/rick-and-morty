@@ -2,70 +2,45 @@ import { useState, useEffect } from 'react';
 
 const ListaPersonajes = () => {
 
-    const [ricks, setRicks] = useState([]);
-    const [mortys, setMortys] = useState([]);
+    const [characters, setCharacters] = useState([]);
+    const [count, setCount] = useState(30); //estado para el manejo de personajes a mostrar
+
+
+
 
     useEffect(() => {
 
-        const getCharacters = async (name, count) => { // name y count como parametros
+        const getCharacters = async (count) => { //count como parametro
 
-            let page = 1;
-            let characters = [];
+            try {
+                const response = await fetch('https://rickandmortyapi.com/api/character');
+                const data = await response.json();
 
-            while (characters.length < count) {
-                try {
-                    const response = await fetch('https://rickandmortyapi.com/api/character');
-                    const data = await response.json();
-
-                    if (data.results) {
-                        const filtered = data.results.filter(character => character.name.includes(name));
-                        characters = characters.concat(filtered);
-                    }
-
-                    console.log(characters);
-
-                    if (!data.info?.next) break;
-                    page++;
-
-
-                } catch (error) {
-                    console.error('Error:', error)
-                    break;
+                if (data.results) {
+                    setCharacters(data.results.slice(0, count));
                 }
+            } catch (error) {
+                console.error('Error:', error)
             }
-            return characters.slice(0, count); //asegura que solo devuelva la cantidad pedida
         };
-
-        const getData = async () => {
-            const rickResults = await getCharacters("Rick", 5);
-            const mortyResults = await getCharacters("Morty", 5);
-            setRicks(rickResults);
-            setMortys(mortyResults);
-
-            console.log(rickResults);
-
-        }
-        getData();
-
-
-    }, []);
+        getCharacters(count) //usa el estado actual
+    }, [count]); // cuando cambia count se actualiza
 
 
     return (
         <div>
-            <h2>Ricks</h2>
+            <audio autoPlay loop>
+                <source src="./music/Ivan Cornejo - Mirada (Official Lyric Video).mp3" type="audio/mp3" />
+            </audio>
+
+            <h2>Personajes</h2>
             <ul>
                 {
-                    ricks.map((rick, i) => (
-                        <li key={i}>{rick.name}</li>
-                    ))
-                }
-            </ul>
-            <h2>Mortys</h2>
-            <ul>
-                {
-                    mortys.map((morty, i) => (
-                        <li key={i}>{morty.name}</li>
+                    characters.map((character, i) => (
+                        <li key={i}>
+                            <img src="" alt="" />
+                            {character.name}
+                        </li>
                     ))
                 }
             </ul>
@@ -75,3 +50,21 @@ const ListaPersonajes = () => {
 }
 
 export default ListaPersonajes;
+
+
+// const getData = async () => {
+//     const rickResults = await getCharacters("Rick", 5);
+//     const mortyResults = await getCharacters("Morty", 5);
+//     const summerResults = await getCharacters("Summer", 3);
+//     const bethResults = await getCharacters("Beth", 3);
+//     const jerryResults = await getCharacters("Jerry", 3);
+//     setRicks(rickResults);
+//     setMortys(mortyResults);
+//     setSummers(summerResults);
+//     setBeths(bethResults);
+//     setJerrys(jerryResults);
+
+//     console.log(rickResults);
+// }
+
+// getData();
