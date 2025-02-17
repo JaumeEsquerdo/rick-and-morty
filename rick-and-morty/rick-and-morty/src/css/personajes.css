@@ -1,10 +1,29 @@
 .Personajes-ul {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    height: 100%;
 }
-.Personajes-img{
+
+.Personajes-img {
     border-radius: 20px;
+    border: 5px solid beige;
 }
+
+.Personajes-img.alien {
+
+    padding: 2px;
+    /* Esto será el espacio para simular el borde */
+    background: linear-gradient(90deg, 
+    rgba(139, 0, 0, 0.8) 0%, 
+    rgba(178, 34, 34, 0.8) 100%);
+    border-radius: 20px;
+    /* Es opcional, solo si deseas bordes redondeados */
+    background-clip: border-box;
+    /* Esto asegura que el gradiente se recorte en el borde */
+    border: 5px solid transparent;
+    /* Hacemos el borde transparente para que solo se vea el gradiente */
+}
+
 .Fixed-image {
     position: fixed;
     top: 60px;
@@ -13,15 +32,58 @@
     background-repeat: no-repeat;
     background-position: center;
     z-index: -1;
-    width: 400px;   /* Ajusta el tamaño de la imagen según su contenido */
-    height: 400px;  /* Ajusta la altura proporcionalmente */
-    max-width: 100%; /* Para que no se salga de los límites de su contenedor */
+    width: 400px;
+    /* Ajusta el tamaño de la imagen según su contenido */
+    height: 400px;
+    /* Ajusta la altura proporcionalmente */
+    max-width: 100%;
+    /* Para que no se salga de los límites de su contenedor */
     object-fit: contain;
     border: none;
-    border-style: none; /* Asegura que no haya borde */
+    border-style: none;
+    /* Asegura que no haya borde */
 
     outline: none;
     padding: 0;
     margin: 0;
+}
 
+/* .Tarjeta-front, .Tarjeta-back{
+    border: 5px solid beige;
+}  */
+.Tarjeta-back {
+    background-color: aliceblue;
+    height: 300px;
+    width: 300px;
+    border-radius: 20px;
+}
+
+.Count {
+    height: 80px;
+    width: 80px;
+    background-color: rgb(103, 174, 236);
+    border-radius: 20px;
+    align-content: center;
+}
+
+.Btn-prev {}
+
+.Btn-next {}
+
+.Btn-next,
+.Btn-prev {
+    width: 160px;
+    border-radius: 20px;
+    padding: 10px 20px;
+}
+
+.Controls {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.Controls-btn {
+    display: flex;
 }

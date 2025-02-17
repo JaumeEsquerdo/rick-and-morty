@@ -9,6 +9,9 @@ export const ListaPersonajes = () => {
     const [hasPrevPage, setHasPrevPage] = useState(false); //empieza en false ya que en la pagina 1 no hay menos
     const [loading, setLoading] = useState(false);
     const [angle, setAngle] = useState(0);
+    const [maxPages, setMaxPages] = useState(1); // Almacena el máximo de páginas
+    const [species, setSpecies] = useState("human");
+
     useEffect(() => {
 
         const getCharacters = async () => {
@@ -33,6 +36,7 @@ export const ListaPersonajes = () => {
 
                 setHasNextPage(data.info.next !== null); //verifica y pone true si no es null el valor
                 setHasPrevPage(data.info.prev !== null);
+                setMaxPages(data.info.pages)
 
             } catch (error) {
                 console.error('Error:', error)
@@ -64,51 +68,81 @@ export const ListaPersonajes = () => {
         }
     };
 
+    const getBorder = (species)=> {
+        if (species=="Human"){
+            return "human";
+        } else if(species ==="Alien"){
+            return "alien"
+        }
+        return "";
+    }
+
 
     return (
-        <div>
+        <div >
 
             {loading && <p>Cargando...</p>}
             <img src="/img/portal-rick.png"
-                style={{ transform: `rotate(${angle}deg)` }} className='Fixed-image' />
+                style={{ transform: `rotate(${angle}deg)`}} className={`Fixed-image`}/>
 
             <ul className='Personajes-ul'>
                 {
-                    characters.map((character, i) => (
-                        <li key={i}>
-                            <div className='Tarjeta'>
-                                {/* parte frontal */}
-                                <div className='Tarjeta-front'>
-                                <img className='Personajes-img' loading='lazy' src={character.image} alt={`Imagen de ${character.name}`} />
-                                <p>{character.name}</p>
-                                </div>
+                    characters.map((character) => (
+                        <CharacterCard key={character.id} character={character} getBorder={getBorder} />
 
 
-                            {/* parte trasera */}
-                            <div className='Tarjeta-back'>
-                                <p>{character.species}</p>
-
-                            </div>
-
-
-
-                            </div>
-                        </li>
                     ))
                 }
             </ul>
-            {/* si hasPrevPage o Next es false se deshabilita */}
-            <button disabled={!hasPrevPage} onClick={handlePrevPage}>Anteriores personajes</button>
-            <button disabled={!hasNextPage} onClick={handleNextPage}>Siguientes personajes</button>
+            <div className='Controls'>
+                {/* si hasPrevPage o Next es false se deshabilita */}
+                <div className='Controls-btn'>
+                    <button className={`Btn-prev ${!hasPrevPage?"disabled":""}`}  disabled={!hasPrevPage} onClick={handlePrevPage}>Anteriores personajes</button>
+            <button className='Btn-next' disabled={!hasNextPage} onClick={handleNextPage}>Siguientes personajes</button>
+                </div>
+            
+            <p className='Count'>{page}-{maxPages}</p>
+            </div>
+            
         </div>
     );
 }
 
-export default ListaPersonajes;
 
 
+export const CharacterCard = ({ character, getBorder }) => {
+    const [flipped, setFlipped] = useState(false);
 
 
+    return (
+        <li className={`Tarjeta ${flipped ? "flipped" : ""}`} onClick={() => setFlipped(!flipped)}>
+            <div className='Tarjeta-container'>
+                {/* Parte frontal */}
+                {!flipped ? (
+                    <div className='Tarjeta-front'>
+                        <img className={`Personajes-img  ${getBorder(character.species)}`} loading='lazy' src={character.image} alt={`Imagen de ${character.name}`} />
+                        <p>{character.name}</p>
+                    </div>
+                ) : (<>
+                {/* atras */}
+                    <div className='Tarjeta-back'>
+                        
+                            <p>TEXTO ATRÁS IMG</p>
+                        
+
+                    </div>
+                    {flipped && <p className="Tarjeta-name">{character.name}</p>}
+                    </>
+
+                )}
+            </div>
+        </li>
+
+
+    );
+}
+
+export default CharacterCard;
 
 
 

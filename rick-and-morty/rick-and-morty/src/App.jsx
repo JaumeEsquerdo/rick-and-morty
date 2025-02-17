@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import ListaPersonajes from './components/ListaPersonajes'
+import {ListaPersonajes} from './components/ListaPersonajes'
 import '@/css/personajes.css'
 
 import {Lugares} from '@/pages/Lugares'
