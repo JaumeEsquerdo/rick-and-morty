@@ -8,9 +8,11 @@ export const ListaPersonajes = () => {
     const [hasNextPage, setHasNextPage] = useState(true);
     const [hasPrevPage, setHasPrevPage] = useState(false); //empieza en false ya que en la pagina 1 no hay menos
     const [loading, setLoading] = useState(false);
-    const [angle, setAngle] = useState(0);
+    const [angle, setAngle] = useState(0); //para que ruede la img del portal
     const [maxPages, setMaxPages] = useState(1); // Almacena el máximo de páginas
     const [species, setSpecies] = useState("human");
+    const [searchQuery, setSearchQuery] = useState(""); //para el filtro de personajes
+
 
     useEffect(() => {
 
@@ -68,42 +70,69 @@ export const ListaPersonajes = () => {
         }
     };
 
-    const getBorder = (species)=> {
-        if (species=="Human"){
+    const getBorder = (species) => {
+        if (species == "Human") {
             return "human";
-        } else if(species ==="Alien"){
+        } else if (species === "Alien") {
             return "alien"
         }
         return "";
-    }
+    };
 
+    const filteredCharacters = characters.filter(character =>
+        character.name.toLowerCase().includes(searchQuery.toLowerCase().trim())
+    );
+    //actualizar la búsqueda
+    const handleSearch = (event) => {
+        setSearchQuery(event.target.value); // Guarda el valor del input en searchQuery (el useState)
+    };
+    const handleSearchSubmit = (event) => {
+        event.preventDefault(); //ppara que la pagina no se recargue
+    }
 
     return (
         <div >
 
             {loading && <p>Cargando...</p>}
             <img src="/img/portal-rick.png"
-                style={{ transform: `rotate(${angle}deg)`}} className={`Fixed-image`}/>
+                style={{ transform: `rotate(${angle}deg)` }} className={`Fixed-image`} />
 
-            <ul className='Personajes-ul'>
-                {
-                    characters.map((character) => (
+
+            <form className='Personaje-form' onSubmit={handleSearchSubmit}>
+                {/* input de búsqueda */}
+                <input className='' type="text" placeholder="Busca un personaje..." onChange={handleSearch} />
+                {/* onInput actualiza el valor de la búsqueda con cada entrada */}
+                <button className='' type="submit">Buscar</button>
+            </form>
+
+            <div className="CharacterGrid">
+                {filteredCharacters.length !== 0 ? (
+                    filteredCharacters.map((character) => (
                         <CharacterCard key={character.id} character={character} getBorder={getBorder} />
-
-
                     ))
-                }
-            </ul>
+                ) : (
+                    <>
+                        <ul className='Personajes-ul'>
+                            {
+                                characters.map((character) => (
+                                    <CharacterCard key={character.id} character={character} getBorder={getBorder} />
+                                ))
+                            }
+                        </ul>
+                    </>
+                )}
+            </div>
+
             <div className='Controls'>
                 {/* si hasPrevPage o Next es false se deshabilita */}
                 <div className='Controls-btn'>
-                    <button className={`Btn-prev ${!hasPrevPage?"disabled":""}`}  disabled={!hasPrevPage} onClick={handlePrevPage}>Anteriores personajes</button>
-            <button className='Btn-next' disabled={!hasNextPage} onClick={handleNextPage}>Siguientes personajes</button>
+                    <button className={`Btn-prev ${!hasPrevPage ? "disabled" : ""}`} disabled={!hasPrevPage} onClick={handlePrevPage}>Anteriores personajes</button>
+                    <button className='Btn-next' disabled={!hasNextPage} onClick={handleNextPage}>Siguientes personajes</button>
                 </div>
-            
-            <p className='Count'>{page}-{maxPages}</p>
+
+                <p className='Count'>{page}-{maxPages}</p>
             </div>
-            
+
         </div>
     );
 }
@@ -111,6 +140,8 @@ export const ListaPersonajes = () => {
 
 
 export const CharacterCard = ({ character, getBorder }) => {
+    const { name, species, image, status, gender } = character;
+
     const [flipped, setFlipped] = useState(false);
 
 
@@ -120,21 +151,27 @@ export const CharacterCard = ({ character, getBorder }) => {
                 {/* Parte frontal */}
                 {!flipped ? (
                     <div className='Tarjeta-front'>
-                        <img className={`Personajes-img  ${getBorder(character.species)}`} loading='lazy' src={character.image} alt={`Imagen de ${character.name}`} />
-                        <p>{character.name}</p>
+                        <img className={`Personajes-img  ${getBorder(species)}`} loading='lazy' src={image} alt={`Imagen de ${name}`} />
+                        <p>{name}</p>
                     </div>
                 ) : (<>
-                {/* atras */}
+                    {/* atras */}
                     <div className='Tarjeta-back'>
-                        
-                            <p>TEXTO ATRÁS IMG</p>
-                        
+
+                        <p>TEXTO ATRÁS IMG</p>
+
 
                     </div>
-                    {flipped && <p className="Tarjeta-name">{character.name}</p>}
-                    </>
+                    {flipped && <p className="Tarjeta-name">{name}</p>}
+                </>
 
                 )}
+                {/* PLAN B, PONER LA INFO CON EL HOVER */}
+                <div className="Viñeta">
+                    <p className="Viñeta-text"> {status}</p>
+                    <p className="Viñeta-text">{gender}</p>
+                </div>
+
             </div>
         </li>
 
