@@ -10,10 +10,12 @@ export const ListaPersonajes = () => {
     const [loading, setLoading] = useState(false);
     const [angle, setAngle] = useState(0); //para que ruede la img del portal
     const [maxPages, setMaxPages] = useState(1); // Almacena el máximo de páginas
-    const [species, setSpecies] = useState("human");
+
+    // const [species, setSpecies] = useState("human");
+
     const [searchQuery, setSearchQuery] = useState(""); //para el filtro de personajes
 
-
+    //FETCH
     useEffect(() => {
 
         const getCharacters = async () => {
@@ -50,7 +52,10 @@ export const ListaPersonajes = () => {
 
     }, [page]); // cuando cambia count se actualiza
 
-    //interval para rotar
+
+
+
+    //interval para ROTAR IMG
     useEffect(() => {
         const interval = setInterval(() => {
             setAngle((prev) => (prev + 1) % 360) //aumenta en 1 el angulo cada 20 milisegundos + mantener el angulo entre 1 y 360 y que no se acumule hasta muchisimo
@@ -58,6 +63,9 @@ export const ListaPersonajes = () => {
         return () => clearInterval(interval); //limpia el intervalo al desmontarlo
     }, []);
 
+
+
+    //BTNS
     const handleNextPage = () => {
         if (hasNextPage) {//si es true hasnextpage
             setPage(page + 1); //cargar la siguiente page
@@ -70,6 +78,7 @@ export const ListaPersonajes = () => {
         }
     };
 
+    //BORDE DE IMGS DINAMICOS
     const getBorder = (species) => {
         if (species == "Human") {
             return "human";
@@ -79,6 +88,7 @@ export const ListaPersonajes = () => {
         return "";
     };
 
+    //FILTRO BUSQUEDA
     const filteredCharacters = characters.filter(character =>
         character.name.toLowerCase().includes(searchQuery.toLowerCase().trim())
     );
@@ -151,7 +161,7 @@ export const CharacterCard = ({ character, getBorder }) => {
                 {!flipped ? (
                     <div className='Tarjeta-front'>
                         <img className={`Personajes-img  ${getBorder(species)}`} loading='lazy' src={image} alt={`Imagen de ${name}`} />
-                        <p>{name}</p>
+                        <p className='Personajes-text'>{name}</p>
                     </div>
                 ) : (<>
                     {/* atras */}
@@ -167,7 +177,7 @@ export const CharacterCard = ({ character, getBorder }) => {
                 )}
                 {/* PLAN B, PONER LA INFO CON EL HOVER */}
                 <div className="Viñeta">
-                    <p>Curiosities:</p>
+                    <p className='Viñeta-title'>Curiosities of {name}:</p>
                     <p className="Viñeta-text"> {status}</p>
                     <p className="Viñeta-text">{gender}</p>
                 </div>
@@ -181,29 +191,3 @@ export const CharacterCard = ({ character, getBorder }) => {
 
 export default CharacterCard;
 
-
-
-
-
-
-
-
-
-
-
-// const getData = async () => {
-//     const rickResults = await getCharacters("Rick", 5);
-//     const mortyResults = await getCharacters("Morty", 5);
-//     const summerResults = await getCharacters("Summer", 3);
-//     const bethResults = await getCharacters("Beth", 3);
-//     const jerryResults = await getCharacters("Jerry", 3);
-//     setRicks(rickResults);
-//     setMortys(mortyResults);
-//     setSummers(summerResults);
-//     setBeths(bethResults);
-//     setJerrys(jerryResults);
-
-//     console.log(rickResults);
-// }
-
-// getData();
