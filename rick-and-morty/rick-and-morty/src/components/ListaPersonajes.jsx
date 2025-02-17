@@ -10,6 +10,7 @@ export const ListaPersonajes = () => {
     const [loading, setLoading] = useState(false);
     const [angle, setAngle] = useState(0); //para que ruede la img del portal
     const [maxPages, setMaxPages] = useState(1); // Almacena el máximo de páginas
+    const[cantidadPj, setCantidadPj] = useState(0);
 
     // const [species, setSpecies] = useState("human");
 
@@ -41,6 +42,7 @@ export const ListaPersonajes = () => {
                 setHasNextPage(data.info.next !== null); //verifica y pone true si no es null el valor
                 setHasPrevPage(data.info.prev !== null);
                 setMaxPages(data.info.pages)
+                setCantidadPj(data.info.count)
 
             } catch (error) {
                 console.error('Error:', error)
@@ -50,7 +52,7 @@ export const ListaPersonajes = () => {
         };
         getCharacters() //usa la pagina actual
 
-    }, [page]); // cuando cambia count se actualiza
+    }, [page,cantidadPj]); // cuando cambia count se actualiza
 
 
 
@@ -140,6 +142,7 @@ export const ListaPersonajes = () => {
                 </div>
 
                 <p className='Count'>{page}-{maxPages}</p>
+                <p className='CantidadPj'>Total personajes: {cantidadPj}</p>
             </div>
 
         </div>
