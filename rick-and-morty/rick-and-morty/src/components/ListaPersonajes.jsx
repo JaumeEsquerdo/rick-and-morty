@@ -100,9 +100,8 @@ export const ListaPersonajes = () => {
 
             <form className='Personaje-form' onSubmit={handleSearchSubmit}>
                 {/* input de búsqueda */}
-                <input className='' type="text" placeholder="Busca un personaje..." onChange={handleSearch} />
+                <input className='Personaje-search' type="text" placeholder="Busca un personaje..." onChange={handleSearch} />
                 {/* onInput actualiza el valor de la búsqueda con cada entrada */}
-                <button className='' type="submit">Buscar</button>
             </form>
 
             <div className="CharacterGrid">
@@ -168,6 +167,7 @@ export const CharacterCard = ({ character, getBorder }) => {
                 )}
                 {/* PLAN B, PONER LA INFO CON EL HOVER */}
                 <div className="Viñeta">
+                    <p>Curiosities:</p>
                     <p className="Viñeta-text"> {status}</p>
                     <p className="Viñeta-text">{gender}</p>
                 </div>

@@ -18,9 +18,9 @@
 
     padding: 2px;
     /* Esto será el espacio para simular el borde */
-    background: linear-gradient(90deg, 
-    rgba(139, 0, 0, 0.8) 0%, 
-    rgba(178, 34, 34, 0.8) 100%);
+    background: linear-gradient(90deg,
+            rgba(139, 0, 0, 0.8) 0%,
+            rgba(178, 34, 34, 0.8) 100%);
     border-radius: 20px;
     /* Es opcional, solo si deseas bordes redondeados */
     background-clip: border-box;
@@ -62,29 +62,52 @@
     width: 300px;
     border-radius: 20px;
 }
-.Tarjeta-container{
-    position: relative; 
+
+.Tarjeta-container {
+    position: relative;
 }
+
 .Viñeta {
     position: absolute;
-    top: -50px; 
-    left: 10px; 
-    background-color: rgba(238, 223, 223, 0.7); 
-    color: rgb(10, 10, 10); 
+    top: 10px;
+    left: -120px;
+    background-color: var(--color-bg-principal);
+    color: rgb(10, 10, 10);
     padding: 10px;
     border-radius: 20px;
     font-size: 24px;
-    opacity: 0; /* Invisible por defecto */
-    transition: opacity 0.3s ease; 
+    opacity: 0;
+    /* Invisible por defecto */
+    transition: opacity 0.3s ease;
     width: 200px;
     height: auto;
     align-content: center;
 }
-.Viñeta-text{
+
+.Viñeta::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    right: 40px;
+    width: 40px;
+    height: 20px;
+    background-color: var(--color-bg-principal);
+    /* border-width: 10px; */
+    /* border-style: solid; */
+    clip-path: polygon(50% 100%, 0% 0%, 100% 0%);
+    border-radius: 30px;
+    /* Suaviza las puntas */
+    /* border-color: var(--color-bg-principal) transparent transparent transparent; */
+    /* Cuando aplicas border a un div sin tamaño (width: 0; height: 0;), cada borde forma un triángulo */
+}
+
+.Viñeta-text {
     color: black;
 }
+
 .Tarjeta-container:hover .Viñeta {
-    opacity: 1; /* Hacer visible la viñeta */
+    opacity: 1;
+    /* Hacer visible la viñeta */
 }
 
 .Count {
@@ -115,4 +138,14 @@
 
 .Controls-btn {
     display: flex;
+}
+
+.Personaje-search {
+    border-radius: 20px;
+    width: 400px;
+    padding: 10px 20px;
+}
+
+.Personajes-title {
+    font-size: 40px;
 }

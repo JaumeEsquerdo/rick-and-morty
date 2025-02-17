@@ -1,12 +1,12 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family:"Bahianita", Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  --color-texto-principal: #f7e7d0;
-  --color-texto-secundario: #f7e7d0;
-  --color-bg-principal: #1d1408;
-  --color-bg-secundario: #35322e;
-
+  --color-texto-principal: #B1F0F7;
+  --color-texto-secundario: #81BFDA;
+  --color-bg-principal: #F5F0CD;
+  --color-bg-secundario: #FADA7A;
+  
 
 
 }
