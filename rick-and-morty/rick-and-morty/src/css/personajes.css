@@ -113,7 +113,7 @@
 .Count {
     height: 80px;
     width: 80px;
-    background-color: rgb(103, 174, 236);
+    background-color: var(--color-bg-secundario);
     border-radius: 20px;
     align-content: center;
 }
@@ -127,7 +127,13 @@
     width: 160px;
     border-radius: 20px;
     padding: 10px 20px;
+    background-color: var(--color-bg-secundario);
+    color: var(--color-texto-secundario);
 }
+.Btn-next.disabled,
+.Btn-prev.disabled{
+    background-color: var(--color-bg-principal);
+} 
 
 .Controls {
     display: flex;
