@@ -47,6 +47,10 @@ ul{
   font-size: 24px;
 }
 
+.active{
+  color: var(--color-bg-principal);
+}
+
 
 
 
