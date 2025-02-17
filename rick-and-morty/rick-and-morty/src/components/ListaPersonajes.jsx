@@ -10,7 +10,7 @@ export const ListaPersonajes = () => {
     const [loading, setLoading] = useState(false);
     const [angle, setAngle] = useState(0); //para que ruede la img del portal
     const [maxPages, setMaxPages] = useState(1); // Almacena el máximo de páginas
-    const[cantidadPj, setCantidadPj] = useState(0);
+    const [cantidadPj, setCantidadPj] = useState(0);
 
     // const [species, setSpecies] = useState("human");
 
@@ -21,9 +21,11 @@ export const ListaPersonajes = () => {
 
         const getCharacters = async () => {
             setLoading(true)
+
+            //FETCH DE 20 personajes + name searchQuery para filtrar por nombre
             try {
                 console.log("Fetch")
-                const response = await fetch(`https://rickandmortyapi.com/api/character?page=${page}`);
+                const response = await fetch(`https://rickandmortyapi.com/api/character?page=${page}&name=${searchQuery}`);
 
                 //saber si la respuesta no tuvo exito
                 if (!response.ok) {
@@ -34,9 +36,7 @@ export const ListaPersonajes = () => {
 
                 if (data.results) {
                     setCharacters(data.results);
-
                     console.log("Personajes cargados", data.results)
-
                 }
 
                 setHasNextPage(data.info.next !== null); //verifica y pone true si no es null el valor
@@ -52,7 +52,7 @@ export const ListaPersonajes = () => {
         };
         getCharacters() //usa la pagina actual
 
-    }, [page,cantidadPj]); // cuando cambia count se actualiza
+    }, [page, cantidadPj, searchQuery]); // cuando cambia count se actualiza
 
 
 
@@ -64,6 +64,7 @@ export const ListaPersonajes = () => {
         }, 30);
         return () => clearInterval(interval); //limpia el intervalo al desmontarlo
     }, []);
+
 
 
 
@@ -91,12 +92,20 @@ export const ListaPersonajes = () => {
     };
 
     //FILTRO BUSQUEDA
-    const filteredCharacters = characters.filter(character =>
-        character.name.toLowerCase().includes(searchQuery.toLowerCase().trim())
-    );
+    const filteredCharacters = characters;
+    // characters.filter(character =>
+    //     character.name.toLowerCase().includes(searchQuery.toLowerCase().trim())
+    // );
+
+
+
+
     //actualizar la búsqueda
     const handleSearch = (event) => {
-        setSearchQuery(event.target.value); // Guarda el valor del input en searchQuery (el useState)
+        if (event.target.value.length > 3) {
+            setSearchQuery(event.target.value); // Guarda el valor del input en searchQuery (el useState)
+        } else { setSearchQuery("") }
+
     };
     const handleSearchSubmit = (event) => {
         event.preventDefault(); //ppara que la pagina no se recargue
@@ -169,20 +178,19 @@ export const CharacterCard = ({ character, getBorder }) => {
                 ) : (<>
                     {/* atras */}
                     <div className='Tarjeta-back'>
-
+                        <img style={{ opacity: "0" }} />
                         <p>TEXTO ATRÁS IMG</p>
 
-
                     </div>
-                    {flipped && <p className="Tarjeta-name">{name}</p>}
+                    {<p className="Tarjeta-name">{name}</p>}
                 </>
 
                 )}
                 {/* PLAN B, PONER LA INFO CON EL HOVER */}
-                <div className="Viñeta">
-                    <p className='Viñeta-title'>Curiosities of {name}:</p>
-                    <p className="Viñeta-text"> {status}</p>
-                    <p className="Viñeta-text">{gender}</p>
+                <div className="Vineta">
+                    <p className='Vineta-title'>Curiosities of {name}:</p>
+                    <p className="Vineta-text"> {status}</p>
+                    <p className="Vineta-text">{gender}</p>
                 </div>
 
             </div>
