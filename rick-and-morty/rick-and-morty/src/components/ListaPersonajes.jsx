@@ -1,4 +1,11 @@
 import { useState, useEffect } from 'react';
+import { BsGenderFemale, BsGenderMale } from "react-icons/bs";
+import { VscWorkspaceUnknown } from "react-icons/vsc";
+import { FaRedditAlien } from "react-icons/fa";
+import { PiFinnTheHumanFill } from "react-icons/pi";
+
+
+
 
 export const ListaPersonajes = () => {
 
@@ -165,6 +172,23 @@ export const CharacterCard = ({ character, getBorder }) => {
 
     const [flipped, setFlipped] = useState(false);
 
+    const getSpeciesIcon = (species)=>{
+        switch(species){
+            case "Human": return <PiFinnTheHumanFill />;
+            case "Alien": return <FaRedditAlien />;
+            
+            default : return "❓"
+        }
+    }
+
+    const getGenderIcon = (gender)=>{
+        switch(gender){
+            case"Female": return <BsGenderFemale />;
+            case"Male": return <BsGenderMale />
+            default: return <VscWorkspaceUnknown />
+        }
+    }
+
 
     return (
         <li className={`Tarjeta ${flipped ? "flipped" : ""}`} onClick={() => setFlipped(!flipped)}>
@@ -190,7 +214,9 @@ export const CharacterCard = ({ character, getBorder }) => {
                 <div className="Vineta">
                     <p className='Vineta-title'>Curiosities of {name}:</p>
                     <p className="Vineta-text"> {status}</p>
-                    <p className="Vineta-text">{gender}</p>
+                    <div>{getGenderIcon(gender)} </div>
+                    <div>{getSpeciesIcon(species)}
+                    </div>
                 </div>
 
             </div>

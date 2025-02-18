@@ -18,7 +18,9 @@ const NavBar = () => (
     </div>
     <nav className='Navegacion'>
       <ul className='Navegacion-ul'>
-        <li><NavLink className='Navegacion-a' to="/personajes">Personajes</NavLink></li>
+        <li><NavLink className={({ isActive }) =>
+          `${isActive || location.pathname === "/" ? "active" : ""} Navegacion-a`
+        } to="/personajes">Personajes</NavLink></li>
         <li><NavLink className='Navegacion-a' to="/lugares">Lugares</NavLink></li>
         <li><NavLink className='Navegacion-a' to="/episodios">Episodios</NavLink></li>
       </ul>
