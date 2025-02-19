@@ -3,8 +3,8 @@
   line-height: 1.5;
   font-weight: 400;
   --color-texto-principal: #B1F0F7;
-  --color-texto-secundario: #81BFDA;
-  --color-bg-principal: #F5F0CD;
+  --color-texto-secundario: #36361d;
+  --color-bg-principal: #d1e7f2;
   --color-bg-secundario: #FADA7A;
   
 
@@ -50,7 +50,9 @@ ul{
 .active{
   color: var(--color-bg-principal);
 }
-
+.Icon{
+  color: var(--color-texto-secundario);
+}
 
 
 

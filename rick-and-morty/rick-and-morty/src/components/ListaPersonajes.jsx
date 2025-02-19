@@ -3,6 +3,7 @@ import { BsGenderFemale, BsGenderMale } from "react-icons/bs";
 import { VscWorkspaceUnknown } from "react-icons/vsc";
 import { FaRedditAlien } from "react-icons/fa";
 import { PiFinnTheHumanFill } from "react-icons/pi";
+import '@/css/personajes.css'
 
 
 
@@ -131,6 +132,13 @@ export const ListaPersonajes = () => {
                 <input className='Personaje-search' type="text" placeholder="Busca un personaje..." onChange={handleSearch} />
                 {/* onInput actualiza el valor de la búsqueda con cada entrada */}
             </form>
+            <div className="Iconos-explicacion">
+                <p className='Iconos-text'><PiFinnTheHumanFill style={{ fill: "DarkOliveGreen" }} /> Human</p>
+                <p className='Iconos-text'><FaRedditAlien style={{ fill: "darkred" }} /> Alien</p>
+                <p className='Iconos-text'><BsGenderMale style={{ fill: "SteelBlue" }} /> Male</p>
+                <p className='Iconos-text'><BsGenderFemale style={{ fill: "Purple" }} /> Female</p>
+                <p className='Iconos-text'><VscWorkspaceUnknown style={{ fill: "Chocolate" }} /> Unknown</p>
+            </div>
 
             <div className="CharacterGrid">
                 {filteredCharacters.length !== 0 ? (
@@ -172,26 +180,27 @@ export const CharacterCard = ({ character, getBorder }) => {
 
     const [flipped, setFlipped] = useState(false);
 
-    const getSpeciesIcon = (species)=>{
-        switch(species){
-            case "Human": return <PiFinnTheHumanFill />;
-            case "Alien": return <FaRedditAlien />;
-            
-            default : return "❓"
+    const getSpeciesIcon = (species) => {
+        switch (species) {
+            case "Human": return <PiFinnTheHumanFill style={{ fill: `${species == "Human" ? "DarkOliveGreen" : ""}` }} />;
+            case "Alien": return <FaRedditAlien style={{ fill: `${species == "Alien" ? "darkred" : ""}` }} />;
+
+            default: return "❓"
         }
     }
 
-    const getGenderIcon = (gender)=>{
-        switch(gender){
-            case"Female": return <BsGenderFemale />;
-            case"Male": return <BsGenderMale />
-            default: return <VscWorkspaceUnknown />
+    const getGenderIcon = (gender) => {
+        switch (gender) {
+            case "Female": return <BsGenderFemale style={{ fill: `${gender == "Female" ? "Purple" : ""}` }} />;
+            case "Male": return <BsGenderMale style={{ fill: `${gender == "Male" ? "SteelBlue" : ""}` }} />
+            default: return <VscWorkspaceUnknown style={{ fill: "Chocolate" }} />
         }
     }
 
 
     return (
-        <li className={`Tarjeta ${flipped ? "flipped" : ""}`} onClick={() => setFlipped(!flipped)}>
+        <li className={`Tarjeta ${flipped ? "flipped" : ""}`} onClick={() => setFlipped(flipped)}>
+            {/* hay que cambiar y poner setFlipped(!flipped), si quiero que se gire la card */}
             <div className='Tarjeta-container'>
                 {/* Parte frontal */}
                 {!flipped ? (
@@ -213,10 +222,8 @@ export const CharacterCard = ({ character, getBorder }) => {
                 {/* PLAN B, PONER LA INFO CON EL HOVER */}
                 <div className="Vineta">
                     <p className='Vineta-title'>Curiosities of {name}:</p>
-                    <p className="Vineta-text"> {status}</p>
-                    <div>{getGenderIcon(gender)} </div>
-                    <div>{getSpeciesIcon(species)}
-                    </div>
+                    <div className="Vineta-text">{getGenderIcon(gender)} {getSpeciesIcon(species)} {status}</div>
+
                 </div>
 
             </div>

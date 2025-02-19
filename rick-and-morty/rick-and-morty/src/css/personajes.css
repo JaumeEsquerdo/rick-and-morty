@@ -77,7 +77,7 @@
     position: absolute;
     top: 10px;
     left: -120px;
-    background-color: var(--color-bg-principal);
+    background-color: var(--color-bg-secundario);
     color: var(--color-texto-secundario);
     padding: 10px;
     border-radius: 20px;
@@ -97,7 +97,7 @@
     right: 40px;
     width: 40px;
     height: 20px;
-    background-color: var(--color-bg-principal);
+    background-color: var(--color-bg-secundario);
     /* border-width: 10px; */
     /* border-style: solid; */
     clip-path: polygon(50% 100%, 0% 0%, 100% 0%);
@@ -108,7 +108,10 @@
 }
 
 .Vineta-text {
-    color: black;
+    color:var(--color-texto-secundario);
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .Vineta-title {
@@ -187,4 +190,19 @@
 .Personajes-title {
     font-size: 40px;
 
+}
+
+.Iconos-explicacion {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    font-size: 14px;
+    align-items: center;
+}
+
+.Iconos-text {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 20px;
 }
